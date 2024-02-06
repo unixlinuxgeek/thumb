@@ -1,0 +1,1 @@
+### Utility for creating thumbnails and adding thumbnails to a video file
