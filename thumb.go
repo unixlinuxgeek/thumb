@@ -1,6 +1,7 @@
 // Capture 1 frame from video
 //
-//	ffmpeg -i ./in.mp4 -i ./out1.png -map 0 -map 1 -c copy -c:v:1 png -disposition:v:1 attached_pic out.mp4
+//		./ffmpeg -y -i /home/geek/Videos/in.mp4 -i /home/geek/Videos/in.jpg -map 1 -map 0 -c copy -disposition:0 attached_pic /home/geek/Videos/out_000111.mp4
+//	 ../bin/ffmpeg-amd64-static/ffmpeg -y -i /home/geek/Videos/in.mp4 -i /home/geek/Videos/in.jpg -map 1 -map 0 -c copy -disposition:0 attached_pic /home/geek/Videos/out_001.mp4
 package thumb
 
 import (
@@ -16,6 +17,7 @@ func Gen(vidName string, outImg, time string) error {
 		log.Fatal(err)
 	}
 
+	// ffmpeg -y -i /home/geek/Videos/in.mp4 -i /home/geek/Videos/in.jpg -map 1 -map 0 -c copy -disposition:0 attached_pic /home/geek/Videos/out_00011.mp4
 	app := "./bin/ffmpeg-amd64-static/ffmpeg"
 	arg1 := "-y"
 	arg2 := "-ss"
@@ -36,29 +38,32 @@ func Gen(vidName string, outImg, time string) error {
 	return nil
 }
 
+// ./bin/ffmpeg-amd64-static/ffmpeg -y -ss 00:01 -i /home/geek/Videos/in.mp4 -i /home/geek/Videos/in.jpg -map 1 -map 0 -c copy -disposition:0 attached_pic /home/geek/Videos/out_004.mp4
 func Ins(inVid string, inImg, outVid, time string) error {
 	app := "./bin/ffmpeg-amd64-static/ffmpeg"
-	// ffmpeg -i in.mp4 -i IMAGE -map 0 -map 1 -c copy -c:v:1 png -disposition:v:1 attached_pic out.mp4
-
-	// ffmpeg -y -i in.mp4 -i ./out1.png -map 0 -map 1 -c copy -c:v:1 png -disposition:v:1 attached_pic out.mp4
+	// ./ffmpeg -y -i /home/geek/Videos/in.mp4 -i /home/geek/Videos/in.jpg -map 1 -map 0 -c copy -disposition:0 attached_pic /var/tmp/out_00011.mp4
 	arg01 := "-y"
-	arg02 := "-i"
-	arg03 := inVid
+	//arg02 := "-ss"
+	//arg03 := time
+
+	// ./bin/ffmpeg-amd64-static/ffmpeg -y -i /home/geek/Videos/in.mp4 -i /home/geek/Videos/in.jpg -map 1 -map 0 -c copy -disposition:0 attached_pic /home/geek/Videos/out_009.mp4
+
 	arg04 := "-i"
-	arg05 := inImg
-	arg06 := "-map"
-	arg07 := "0"
+	arg05 := inVid
+	arg06 := "-i"
+	arg07 := inImg
 	arg08 := "-map"
 	arg09 := "1"
-	arg10 := "-c"
-	arg11 := "copy"
-	arg12 := "-c:v:1"
-	arg13 := "png"
-	arg14 := "-disposition:v:1"
+	arg10 := "-map"
+	arg11 := "0"
+	arg12 := "-c"
+	arg13 := "copy"
+	arg14 := "-disposition:0"
 	arg15 := "attached_pic"
 	arg16 := outVid
 
-	cmd := exec.Command(app, arg01, arg02, arg03, arg04, arg05, arg06, arg07, arg08, arg09, arg10, arg11, arg12, arg13, arg14, arg15, arg16)
+	// arg02, arg03
+	cmd := exec.Command(app, arg01, arg04, arg05, arg06, arg07, arg08, arg09, arg10, arg11, arg12, arg13, arg14, arg15, arg16)
 	err := cmd.Run()
 	return err
 }
